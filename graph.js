@@ -17,12 +17,17 @@ function graph(num_nodes, chord_len){
     //The for loop will create an array which will contain arrays. In the 
     //contained arrays it should contain the start and end point of a
     //chord for the graph.
-    for(let i = 0; i < num_chords; i++){
-        diagram.push([(2*i) % num_nodes, ((2*i) + chord_len) % num_nodes]);
+    if(num_nodes%chord_len == 0){
+        for(let i = 0; i < num_chords; i++){
+            diagram.push([(2*i) % num_nodes, ((2*i) + chord_len) % num_nodes]);
+        }
+    }
+    else{
+        //Will need to indicate to the browser later that uder input invalid data
+        return null
     }
 
-    console.log(diagram);
+
+    return diagram;
 
 }
-
-graph(12,3);
