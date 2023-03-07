@@ -31,3 +31,7 @@ function graph(num_nodes, chord_len){
     return diagram;
 
 }
+
+module.exports = {
+    genGraph: graph
+}
