@@ -10,7 +10,7 @@
  * the length of the third edge on each node.
  * 
  */
-function graph(num_nodes, chord_len){
+module.exports = function graph(num_nodes, chord_len){
     let diagram = [];
     let num_chords = num_nodes/2;
 
@@ -27,11 +27,5 @@ function graph(num_nodes, chord_len){
         return null
     }
 
-
     return diagram;
-
-}
-
-module.exports = {
-    genGraph: graph
 }

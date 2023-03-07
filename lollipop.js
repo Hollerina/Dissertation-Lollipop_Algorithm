@@ -1,3 +1,5 @@
+const fs = require('fs')
+
 module.exports = class Lollipop{
     /**
      * 
@@ -50,12 +52,13 @@ module.exports = class Lollipop{
             }
         }
         //Add using the last element on the current_path.
-        current_chord = this.chord_arr[current_path[-1]];
+        current_chord = this.chord_arr[current_path[current_path.length-1]];
 
         //Now append the both ham_paths and connect_chords.
         ham_paths.push(current_path);
         connect_chords.push(current_chord);
 
+        console.log(current_chord)
 
         //Create an array for the new Hamiltonian path
         let new_ham_path = [];
@@ -63,6 +66,8 @@ module.exports = class Lollipop{
         let closing_vertex = 0;
         //An array which stores all the connections to the last vertex in the array
         let closing_connections = [];
+        //create step count 
+        let steps = 0;
 
         //loop through the lollipop algorithm. Need to kepe looping until  a new Hamiltonian cycle is found.
         while(current_chord != vertex){
@@ -73,13 +78,18 @@ module.exports = class Lollipop{
                     closing_vertex = i;
                     break;
                 }
+                
             }
 
+
             //Now need to walk backwards along the path
+            console.log(this.verticies - 1 , closing_vertex)
             for(let i = this.verticies - 1; i > closing_vertex; i--){
                 new_ham_path.push(current_path[i]);
             }
             current_path = new_ham_path;
+            
+            //console.log(current_path)
 
             //Need to find what to set the next current_chord to be
             //Find the last element in the new_ham_path
@@ -100,7 +110,17 @@ module.exports = class Lollipop{
             current_chord = closing_connections[0];
             ham_paths.push(current_path)
             connect_chords.push(current_chord)
+            new_ham_path = [];
+            steps++;
         }
-        console.log(ham_paths)
+
+        const output = `Chord Length: ${this.chords[0][1]}\nNumber of vertices: ${this.verticies}\nSteps ${steps}\nLog steps: ${Math.floor(Math.log(steps, 2))}`;
+        fs.writeFile("./output.txt", output, (err) => {
+            if(err){
+                return console.log(err);
+            }
+            console.log("file saved");
+        })
+
     } 
 }
