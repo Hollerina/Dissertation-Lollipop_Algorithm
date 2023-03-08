@@ -58,7 +58,6 @@ module.exports = class Lollipop{
         ham_paths.push(current_path);
         connect_chords.push(current_chord);
 
-        console.log(current_chord)
 
         //Create an array for the new Hamiltonian path
         let new_ham_path = [];
@@ -83,7 +82,6 @@ module.exports = class Lollipop{
 
 
             //Now need to walk backwards along the path
-            console.log(this.verticies - 1 , closing_vertex)
             for(let i = this.verticies - 1; i > closing_vertex; i--){
                 new_ham_path.push(current_path[i]);
             }
