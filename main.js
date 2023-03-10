@@ -1,7 +1,7 @@
 const graph = require('./graph.js')
 const Lollipop = require('./lollipop.js')
 try{
-    const g = graph(12, 5);
+    const g = graph(12, 3);
     console.log(g)
 
     const lol = new Lollipop(g)
