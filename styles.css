@@ -1,5 +1,6 @@
-body{
+body,html{
     background-color: #FEFAE0;
+    height: 95%;
 }
 
 .flex_container{
@@ -13,20 +14,21 @@ body{
     /*border: 1px solid black;*/
     height: 100%;
     width: 100%;
-    margin: 5px;
     flex: 3;
+    margin: 1%;
 }
 
 #controls{
-    margin-top: 7px;
-    margin-left: 5px;
     height: 100%;
     width:100%;
     flex: 2.1;
     flex-direction: column;
     background-color: #FAEDCD;
-    box-shadow: 0.5px 0.5px 10px #D4A373, -0.5px -0.5px 2px #D4A373;
-    /* border: 0.5px solid #D4A373; */
+    border-radius: 10px;
+    /* margin: 1%; */
+    padding: 1%;
+    padding-top: 0%;
+    margin-top: 1%;
 }
 
 #title{
@@ -35,9 +37,10 @@ body{
     font-size: 20px;
     color:  #000f08;
     text-align: center;
-    margin: 2px;
+    /* margin: 2px; */
     width: 100%;
-    
+    border-radius: 10px;
+    height: 15%;
     
 }
 
@@ -52,7 +55,6 @@ body{
 #graph{
     background-color: #FAEDCD;
     width: 100%;
-    padding-bottom: 100%;
-    margin-top: 10px;
-    margin-left: 2px;
+    height: 85%;
+    border-radius: 10px;
 }
