@@ -10,7 +10,7 @@
  * the length of the third edge on each node.
  * 
  */
-module.exports = function graph(num_nodes, chord_len){
+/*module.exports =*/ function graph(num_nodes, chord_len){
     let diagram = [];
     let num_chords = num_nodes/2;
     //Create an array to store what vertices will have degree 3 already, will be used when chord length is even

@@ -1,6 +1,6 @@
-const fs = require('fs')
+// const fs = require('fs')
 
-module.exports = class Lollipop{
+/*module.exports =*/ class Lollipop{
     /**
      * 
      * @param {Array<Array<Number>} chords 
@@ -112,13 +112,51 @@ module.exports = class Lollipop{
             steps++;
         }
 
-        const output = `Chord Length: ${this.chords[0][1]}\nNumber of vertices: ${this.verticies}\nSteps ${steps}\nLog steps: ${Math.floor(Math.log(steps, 2))}`;
-        fs.writeFile("./output.txt", output, (err) => {
-            if(err){
-                return console.log(err);
-            }
-            console.log("file saved");
-        })
+        // const output = `Chord Length: ${this.chords[0][1]}\nNumber of vertices: ${this.verticies}\nSteps ${steps}\nLog steps: ${Math.floor(Math.log(steps, 2))}`;
+        // fs.writeFile("./output.txt", output, (err) => {
+        //     if(err){
+        //         return console.log(err);
+        //     }
+        //     console.log("file saved");
+        // })
 
+    }
+    /**
+     * To print the graph on the graph section
+     * 
+     * @author Holly Lampert
+     */
+    print_graph(){
+        //Create an svg element which will contain the graph drawing
+        const svg = d3.select('#graph')
+                      .append('svg')
+                      .attr('width', document.getElementById('graph').clientWidth) //find the width of the div
+                      .attr('height', document.getElementById('graph').clientHeight) //find the height of the div
+        
+        let nodesObj = {};
+        //at middle[0] will contain the x value for centre point and middle[1] contains the y value for centre point
+        let middle = [document.getElementById('graph').clientWidth / 2, document.getElementById('graph').clientHeight / 2];
+        let spaces = (2*Math.PI)/this.verticies;
+        console.log("ghehe", spaces)
+
+        console.log(document.getElementById('graph').clientHeight)
+
+        //Populating an object of the posistions of all the nodes.
+        for(let i = 0 ; i < this.verticies; i++){
+            if(i == 0){
+                nodesObj[i] = {x: document.getElementById('graph').clientWidth - 50 , y: document.getElementById('graph').clientHeight/2}
+            }
+            else{
+                let temp = Math.tan(spaces)
+                console.log(temp)
+                let length = nodesObj[0].x / 2
+                console.log("the length" , length)
+                let taned = temp * length;
+                console.log(taned);
+                nodesObj[i] = {x: 0, y:0};
+            }
+            
+        }
+        console.log(nodesObj)
     } 
 }

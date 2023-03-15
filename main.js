@@ -1,10 +1,11 @@
-const graph = require('./graph.js')
-const Lollipop = require('./lollipop.js')
+// const graph = require('./graph.js')
+// const Lollipop = require('./lollipop.js')
 try{
     const g = graph(12, 3);
     console.log(g)
 
     const lol = new Lollipop(g)
+    lol.print_graph();
     lol.execution(0)
 }
 catch(e){
