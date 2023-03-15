@@ -139,24 +139,32 @@
         let spaces = (2*Math.PI)/this.verticies;
         console.log("ghehe", spaces)
 
-        console.log(document.getElementById('graph').clientHeight)
+        let distance_width = document.getElementById('graph').clientWidth - 100;
+        let distance_height = document.getElementById('graph').clientHeight - 100;
+        //Find how many stages there will be in the ifs
+        let stages = 0;
+        //keep track of how many been added
+        let count = 0;
 
-        //Populating an object of the posistions of all the nodes.
-        for(let i = 0 ; i < this.verticies; i++){
-            if(i == 0){
-                nodesObj[i] = {x: document.getElementById('graph').clientWidth - 50 , y: document.getElementById('graph').clientHeight/2}
+        console.log("hhe" + distance_width)
+
+        if(this.verticies % 4 == 0){
+            stages = this.verticies / 4;
+            for(let i = 0; i < stages; i++){
+                if(i == 0){
+                    nodesObj[count] = {x: 100, y: distance_height/2}
+                    count++;
+                    nodesObj[count] = {x: distance_width,y: distance_height/2};
+                }
             }
-            else{
-                let temp = Math.tan(spaces)
-                console.log(temp)
-                let length = nodesObj[0].x / 2
-                console.log("the length" , length)
-                let taned = temp * length;
-                console.log(taned);
-                nodesObj[i] = {x: 0, y:0};
-            }
-            
         }
+        else{
+            stages = (this.verticies - 2)/ 4;
+        }
+
         console.log(nodesObj)
+
+        //Create an object which will hold objects which of where the coordinates will be
+
     } 
 }
