@@ -150,12 +150,27 @@
 
         if(this.verticies % 4 == 0){
             stages = this.verticies / 4;
-            for(let i = 0; i < stages; i++){
+            for(let i = 0; i <= stages; i++){
                 if(i == 0){
-                    nodesObj[count] = {x: 100, y: distance_height/2}
-                    count++;
                     nodesObj[count] = {x: distance_width,y: distance_height/2};
+                    nodesObj[count + this.verticies/2] = {x: 100, y: distance_height/2}
+                    count++;
                 }
+                else if(i == stages){
+                    nodesObj[count] = {x: distance_width/2, y : 100};
+                    count++;
+                    nodesObj[count] = {x: distance_width/2, y: distance_height};
+                    count++;
+                }
+                else{
+                    let plus_four = count + 4;
+                    while(count < plus_four){
+                        //Need to add or minus so will need counter to change direction of which node beign added
+                        //need to calculate based on ratio of which stage on
+                        nodesObj[count] = {x: ,y: }
+                    }
+                }
+
             }
         }
         else{
