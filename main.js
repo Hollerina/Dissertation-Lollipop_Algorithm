@@ -5,6 +5,9 @@ try{
     console.log(g)
 
     const lol = new Lollipop(g)
+    window.onresize = () => {
+        lol.print_graph()
+    }
     lol.print_graph();
     lol.execution(0)
 }

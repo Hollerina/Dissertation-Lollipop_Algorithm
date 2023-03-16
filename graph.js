@@ -19,7 +19,7 @@
     //The for loop will create an array which will contain arrays. In the 
     //contained arrays it should contain the start and end point of a
     //chord for the graph.
-    if(num_nodes%chord_len == 0){
+    if(num_nodes%chord_len == 0 && num_nodes%2 == 0){
         //need to check if the chord length is even and will need to make sure that number of vertices / chord length is also even too.
         if(chord_len%2 == 0 && (num_nodes / chord_len) % 2 == 0){
             for(let i = 0; i < num_chords/2; i++){

@@ -127,6 +127,7 @@
      * @author Holly Lampert
      */
     print_graph(){
+        d3.selectAll('svg').remove();
         //Create an svg element which will contain the graph drawing
         const svg = d3.select('#graph')
                       .append('svg')
@@ -134,10 +135,6 @@
                       .attr('height', document.getElementById('graph').clientHeight) //find the height of the div
         
         let nodesObj = {};
-        //at middle[0] will contain the x value for centre point and middle[1] contains the y value for centre point
-        let middle = [document.getElementById('graph').clientWidth / 2, document.getElementById('graph').clientHeight / 2];
-        let spaces = (2*Math.PI)/this.verticies;
-        console.log("ghehe", spaces)
 
         let distance_width = document.getElementById('graph').clientWidth - 100;
         let distance_height = document.getElementById('graph').clientHeight - 100;
@@ -154,24 +151,74 @@
             diameter = distance_height;
         }
         //Find the center point of the graph
-        let center = [distance_width/2, distance_height/2];
+        let center = [document.getElementById('graph').clientWidth/2, document.getElementById('graph').clientHeight/2];
         //Find radius of the "circle" to be used
         let radius = diameter/2;
         //Create a copy of the object into an array as well
         let node_arr = [];
+        //Create an array of objects to show the connections between nodes
+        //to do so will have to orgianlly loop through to create connections that were next to each other
+        // for the chrods will have to use the chords given in this.chords 
+        let edges = []
         
         //loop through and populate nodesObj until same amount of coordinates as there is nodes
         for(let i = 0; i < this.verticies; i++){
-            nodesObj[i] = {x: Math.floor(center[0] + (radius * Math.cos(-angle))), y: Math.floor(center[1] + (radius * Math.sin(-angle)))};
+            nodesObj[i] = {x: Math.floor(center[0] + (radius * Math.cos(-angle))), y: Math.floor(center[1] + (radius * Math.sin(-angle))), index: i};
             angle += (2*Math.PI)/this.verticies;
-            node_arr.push(nodesObj[i])
-            console.log(nodesObj[i])
+            node_arr.push(nodesObj[i]);
         }
 
-        console.log(nodesObj)
-        console.log(node_arr)
+        //Create the intial connections between the next to nodes     
+        for(let i = 0; i < this.verticies; i++){
+            if(i == this.verticies - 1){
+                edges.push({"source": nodesObj[i], "target": nodesObj[0]})
+            }
+            else{
+                edges.push({"source": nodesObj[i], "target": nodesObj[i + 1]})
+                
+            }
+        }
 
-        //Create an object which will hold objects which of where the coordinates will be
+        //Create the chords
+        for(let i = 0; i < this.chords.length; i++){
+            edges.push({"source": nodesObj[this.chords[i][0]], "target": nodesObj[this.chords[i][1]]})
+            console.log(nodesObj[this.chords[i][0]])
+            // console.log({"source": nodesObj[this.chords[i]], "target": this.chords[i][1]})
+        }
 
+        console.log("This is edges: " + edges)
+        const edge_group = svg.append('g')
+                              .selectAll()
+                              .data(edges)
+                              .enter();
+        
+        const edge_lines = edge_group.append('line')
+                                     .attr('x1', (d) => d.source.x)
+                                     .attr('y1', (d) => d.source.y)
+                                     .attr('x2', (d) => d.target.x)
+                                     .attr('y2', (d) => d.target.y)
+                                     .attr('stroke','black');
+
+        const vertex_group = svg.append('g')
+                                .selectAll()
+                                .data(node_arr)
+                                .enter();
+        
+        const vertex_points = vertex_group.append('circle')
+                                        .attr('cx', (n) => n.x)
+                                        .attr('cy', (n) => n.y)
+                                        .attr('stroke', 'black')
+                                        .attr('stroke-width', 2)
+                                        .attr('r', 12)
+                                        .attr('fill', 'white');
+
+        const text_points = vertex_group.append('text')
+                                        .text((n) => n.index)
+                                        .attr('text-anchor', 'middle')
+                                        .attr('x', (n) => n.x)
+                                        .attr('y', (n) => n.y+4);
+
+
+        console.log(edges)
     } 
 }
