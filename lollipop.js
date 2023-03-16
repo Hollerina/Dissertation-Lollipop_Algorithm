@@ -141,43 +141,35 @@
 
         let distance_width = document.getElementById('graph').clientWidth - 100;
         let distance_height = document.getElementById('graph').clientHeight - 100;
-        //Find how many stages there will be in the ifs
-        let stages = 0;
-        //keep track of how many been added
-        let count = 0;
 
-        console.log("hhe" + distance_width)
-
-        if(this.verticies % 4 == 0){
-            stages = this.verticies / 4;
-            for(let i = 0; i <= stages; i++){
-                if(i == 0){
-                    nodesObj[count] = {x: distance_width,y: distance_height/2};
-                    nodesObj[count + this.verticies/2] = {x: 100, y: distance_height/2}
-                    count++;
-                }
-                else if(i == stages){
-                    nodesObj[count] = {x: distance_width/2, y : 100};
-                    count++;
-                    nodesObj[count] = {x: distance_width/2, y: distance_height};
-                    count++;
-                }
-                else{
-                    let plus_four = count + 4;
-                    while(count < plus_four){
-                        //Need to add or minus so will need counter to change direction of which node beign added
-                        //need to calculate based on ratio of which stage on
-                        nodesObj[count] = {x: ,y: }
-                    }
-                }
-
-            }
+        //Find the angle of which will be distance between start and each vertex using radians
+        let angle = (2*Math.PI)/this.verticies;
+        //Find the diameter of circle to be used, however need to determine smallest of width and heigth
+        let diameter = 0;
+        
+        if(distance_height > distance_width){
+            diameter = distance_width;
         }
         else{
-            stages = (this.verticies - 2)/ 4;
+            diameter = distance_height;
+        }
+        //Find the center point of the graph
+        let center = [distance_width/2, distance_height/2];
+        //Find radius of the "circle" to be used
+        let radius = diameter/2;
+        //Create a copy of the object into an array as well
+        let node_arr = [];
+        
+        //loop through and populate nodesObj until same amount of coordinates as there is nodes
+        for(let i = 0; i < this.verticies; i++){
+            nodesObj[i] = {x: Math.floor(center[0] + (radius * Math.cos(-angle))), y: Math.floor(center[1] + (radius * Math.sin(-angle)))};
+            angle += (2*Math.PI)/this.verticies;
+            node_arr.push(nodesObj[i])
+            console.log(nodesObj[i])
         }
 
         console.log(nodesObj)
+        console.log(node_arr)
 
         //Create an object which will hold objects which of where the coordinates will be
 
