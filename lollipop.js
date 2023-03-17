@@ -112,6 +112,7 @@
             steps++;
         }
 
+        return ham_paths;
         // const output = `Chord Length: ${this.chords[0][1]}\nNumber of vertices: ${this.verticies}\nSteps ${steps}\nLog steps: ${Math.floor(Math.log(steps, 2))}`;
         // fs.writeFile("./output.txt", output, (err) => {
         //     if(err){

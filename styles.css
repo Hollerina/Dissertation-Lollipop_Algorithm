@@ -60,3 +60,9 @@ body,html{
     height: 85%;
     border-radius: 10px;
 }
+
+.button_start{
+    height: 20px;
+    width: 100%;
+    margin-top: 20px;
+}
