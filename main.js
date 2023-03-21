@@ -50,16 +50,27 @@ function initial_path_finding(){
 
     function next_path_finding(){
         //pass the next Hamiltonian cycle in if the next button is pressed
-        index++;
-        lol.print_graph(paths[index])
+        if(index < paths.length){
+            index++;
+            lol.print_graph(paths[index]);
+        }
+        else{
+            lol.print_graph(paths[0], false);
+        }
+
         
     }
 
     function back_path_finding(){
     //go back a step to previous hamitlonian path if this is pressed
         //do an if if below 0
-        index--;
-        lol.print_graph(paths[index])
+        if(index >= 0){
+            index--;
+            lol.print_graph(paths[index])
+        }
+        else{
+            lol.print_graph(paths[0], false);
+        }
     }
 
 }
