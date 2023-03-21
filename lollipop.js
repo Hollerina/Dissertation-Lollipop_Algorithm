@@ -87,7 +87,6 @@
             }
             current_path = new_ham_path;
             
-            //console.log(current_path)
 
             //Need to find what to set the next current_chord to be
             //Find the last element in the new_ham_path
@@ -127,7 +126,7 @@
      * 
      * @author Holly Lampert
      */
-    print_graph(){
+    print_graph(ham_path, nored=false){
         d3.selectAll('svg').remove();
         //Create an svg element which will contain the graph drawing
         const svg = d3.select('#graph')
@@ -172,22 +171,37 @@
         //Create the intial connections between the next to nodes     
         for(let i = 0; i < this.verticies; i++){
             if(i == this.verticies - 1){
-                edges.push({"source": nodesObj[i], "target": nodesObj[0]})
+                edges.push({"source": nodesObj[i], "target": nodesObj[0], "paths": false})
             }
             else{
-                edges.push({"source": nodesObj[i], "target": nodesObj[i + 1]})
+                edges.push({"source": nodesObj[i], "target": nodesObj[i + 1], "paths": false})
                 
             }
         }
 
-        //Create the chords
+        //Create the chords 
+        //Need to show if connection will be red or not, need an attribute to decide if this edge is in hamiltonanian cycle
         for(let i = 0; i < this.chords.length; i++){
-            edges.push({"source": nodesObj[this.chords[i][0]], "target": nodesObj[this.chords[i][1]]})
-            console.log(nodesObj[this.chords[i][0]])
-            // console.log({"source": nodesObj[this.chords[i]], "target": this.chords[i][1]})
+            edges.push({"source": nodesObj[this.chords[i][0]], "target": nodesObj[this.chords[i][1]], "paths": false})
         }
 
-        console.log("This is edges: " + edges)
+        //Need to show if connection will be red or not, need an attribute to decide if this edge is in hamiltonanian cycle
+        //Should have all the edges and can loop and add attribute to it with true or false
+        console.log(ham_path)
+        for(let i = 0; i < ham_path.length ; i++){
+            for(let j = 0 ; j < edges.length; j++){
+                if(ham_path[i] < ham_path[i+1]) {
+                    if(edges[j].source.index == ham_path[i] && edges[j].target.index == ham_path[i + 1]){
+                        edges[j].paths = true;
+                    }
+                }
+                else {
+                    if(edges[j].target.index == ham_path[i] && edges[j].source.index == ham_path[i + 1]){
+                        edges[j].paths = true;
+                    }
+                }
+            }
+        }
         const edge_group = svg.append('g')
                               .selectAll()
                               .data(edges)
@@ -198,13 +212,23 @@
                                      .attr('y1', (d) => d.source.y)
                                      .attr('x2', (d) => d.target.x)
                                      .attr('y2', (d) => d.target.y)
-                                     .attr('stroke','black');
+                                     .attr('stroke-width', (d) => {
+                                         if(nored){return 2}
+                                         if(d.paths == true) {return 4}
+                                         else {return 2}
+                                     })
+                                     //create so depending on the given array will decide the colour of the edge
+                                     .attr('stroke', (d) => {
+                                         if(nored){return 'black'}
+                                         if(d.paths == true){return 'red'}
+                                         else{return 'black'}
+                                     });
 
         const vertex_group = svg.append('g')
                                 .selectAll()
                                 .data(node_arr)
                                 .enter();
-        
+
         const vertex_points = vertex_group.append('circle')
                                         .attr('cx', (n) => n.x)
                                         .attr('cy', (n) => n.y)
@@ -220,6 +244,5 @@
                                         .attr('y', (n) => n.y+4);
 
 
-        console.log(edges)
     } 
 }

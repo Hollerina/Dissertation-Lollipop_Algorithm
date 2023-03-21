@@ -1,3 +1,7 @@
+*{
+    box-sizing: border-box;
+}
+
 body,html{
     background-color: #FDEEDD;
     height: 95%;
@@ -16,6 +20,47 @@ body,html{
     width: 100%;
     flex: 3;
     margin: 1%;
+    display: flex;
+    flex-direction: column;
+}
+
+
+
+#title{
+    background-color: #fff;
+    font-family:'Sofia Sans Semi Condensed', sans-serif;
+    /* font-size: 30px; */
+    color:  #000f08;
+    text-align: center;
+    /* margin: 2px; */
+    /* width: 100%; */
+    border-radius: 10px;
+    /* height: 15%; */
+
+    flex: 2;
+    border: 2px solid #606c38;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#h1_id{
+    text-decoration-line: underline;
+    text-underline-offset: 5px;
+    text-decoration-thickness: 2.5px;
+    margin: 0%;
+    padding: 3%;
+    font-size: 3em;
+}
+
+.background-graph{
+    margin-top: 1em;
+    background-color: #fff;
+    /* width: 100%;
+    height: 85%; */
+    border-radius: 10px;
+    border: 2px solid #606c38;
+    flex: 10;
 }
 
 #controls{
@@ -26,43 +71,69 @@ body,html{
     background-color: #fff;
     border-radius: 10px;
     /* margin: 1%; */
+
+    border: 2px solid #606c38;
+}
+
+.control-buttons{
     padding: 1%;
     padding-top: 0%;
     margin-top: 1%;
-}
+    width: 100%;  
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
 
-#title{
-    background-color: #fff;
-    font-family:'Sofia Sans Semi Condensed', sans-serif;
-    font-size: 30px;
-    color:  #000f08;
-    text-align: center;
-    /* margin: 2px; */
-    width: 100%;
-    border-radius: 10px;
-    height: 15%;
-    
-}
-
-#h1_id{
-    text-decoration-line: underline;
-    text-underline-offset: 5px;
-    text-decoration-thickness: 2.5px;
-    margin: 0%;
-    text-align: center;
-    padding: 3%;
-}
-
-.background-graph{
-    margin-top: 1em;
-    background-color: #fff;
-    width: 100%;
-    height: 85%;
-    border-radius: 10px;
 }
 
 .button_start{
-    height: 20px;
-    width: 100%;
+    /*Get other part of family for more thicker font*/
+    font-family:'Sofia Sans Semi Condensed', sans-serif;
+    background-color: #f8f0e7;
+    width: 50%;
     margin-top: 20px;
+    border:  1.5px solid #BC6C25;
+    border-radius: 5px;
+    font-size: 100%;
+    padding: 10px 5px;
+}
+
+.button_start:hover{
+    border: 2px solid #BC6C25;
+}
+
+.next_button{
+    /*Get other part of family for more thicker font*/
+    font-family:'Sofia Sans Semi Condensed', sans-serif;
+    background-color: #f8f0e7;
+    width: 40%;
+    margin-top: 20px;
+    border:  1.5px solid #BC6C25;
+    border-radius: 5px;
+    font-size: 100%;
+    padding: 10px 5px;
+    margin-left: 20px;
+    margin-right: 42.25px;
+}
+
+.next_button:hover{
+    border: 2px solid #BC6C25;
+}
+
+.back_button{
+    /*Get other part of family for more thicker font*/
+    font-family:'Sofia Sans Semi Condensed', sans-serif;
+    background-color: #f8f0e7;
+    width: 40%;
+    margin-top: 20px;
+    border:  1.5px solid #BC6C25;
+    border-radius: 5px;
+    font-size: 100%;
+    padding: 10px 5px;
+    margin-left: 42.25px;
+    margin-right: 20px;
+}
+
+.back_button:hover{
+    border: 2px solid #BC6C25;
 }

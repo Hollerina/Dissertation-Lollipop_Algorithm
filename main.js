@@ -1,15 +1,18 @@
 // const graph = require('./graph.js')
 // const Lollipop = require('./lollipop.js')
+let lol;
+let paths;
 try{
     const g = graph(12, 3);
-    console.log(g)
 
-    const lol = new Lollipop(g)
-    window.onresize = () => {
-        lol.print_graph()
-    }
-    lol.print_graph();
+    lol = new Lollipop(g)
+
     paths = lol.execution(0);
+    lol.print_graph(paths[0] , true);
+
+    window.onresize = () => {
+        lol.print_graph(paths[0] , true)
+    }
 
 }
 catch(e){
@@ -25,6 +28,8 @@ document.getElementById("start").onclick = initial_path_finding;
 function initial_path_finding(){
     //This function wil begin the process of starting cycle.
     //need to pass to print_graph the current Hamiltonian path which will be highlighted red
+
+    lol.print_graph(paths[index])
 
     document.getElementById("start").remove();
     const back = document.createElement("button");
@@ -44,15 +49,17 @@ function initial_path_finding(){
     document.getElementById("back_button").onclick = back_path_finding;
 
     function next_path_finding(){
+        //pass the next Hamiltonian cycle in if the next button is pressed
         index++;
-        console.log(index)
+        lol.print_graph(paths[index])
         
     }
 
     function back_path_finding(){
+    //go back a step to previous hamitlonian path if this is pressed
         //do an if if below 0
         index--;
-        console.log(index)
+        lol.print_graph(paths[index])
     }
 
 }
