@@ -11,6 +11,7 @@
  * 
  */
 /*module.exports =*/ function graph(num_nodes, chord_len){
+    console.log(`Nodes: ${num_nodes}, Chords: ${chord_len}`)
     let diagram = [];
     let num_chords = num_nodes/2;
     //Create an array to store what vertices will have degree 3 already, will be used when chord length is even
@@ -22,7 +23,8 @@
     if(num_nodes%chord_len == 0 && num_nodes%2 == 0){
         //need to check if the chord length is even and will need to make sure that number of vertices / chord length is also even too.
         if(chord_len%2 == 0 && (num_nodes / chord_len) % 2 == 0){
-            for(let i = 0; i < num_chords/2; i++){
+            for(let i = 0; i < num_chords; i++){
+                console.log("This is where i is: " + (2*i) % num_nodes)
                 if(!nodes_found.includes((2*i) % num_nodes)){
                     diagram.push([(2*i) % num_nodes, ((2*i) + chord_len % num_nodes)]);
                     // push to nodes_found when added so can skip that index if already been matched up.
@@ -30,8 +32,9 @@
                     nodes_found.push((2*i + chord_len ) % num_nodes);
                 }  
             }
-            for(let i = 0; i < num_chords/2; i++){
+            for(let i = 0; i < num_chords; i++){
                 if(!nodes_found.includes(((2*i) + 1)%num_nodes)){
+                    console.log("HERE")
                     diagram.push([((2*i) + 1)% num_nodes , ((2*i) + 1 + chord_len) % num_nodes]);
                     nodes_found.push(((2*i) + 1) % num_nodes);
                     nodes_found.push(((2*i) + 1 + chord_len) % num_nodes);
@@ -51,6 +54,6 @@
         //Will need to indicate to the browser later that uder input invalid data
         throw "Invlaid graph: Graph cannot be made with this chord length and number of nodes"
     }
-
+    console.log(diagram)
     return diagram;
 }

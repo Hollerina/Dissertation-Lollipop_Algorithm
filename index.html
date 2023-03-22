@@ -11,7 +11,7 @@
         <script defer src = "main.js" type="text/javascript"></script>
     </head>
     <body>
-        <div id = "container" class="flex_container">
+        <div id = "container" class="grid-container">
             <div id = "main_content">
                 <div id = "title">
                     <h1 id = "h1_id">Lollipop Algorithm Simulation</h1>
@@ -22,16 +22,20 @@
             </div>
             <div id = "controls">
                 <div class = "inputs" id = "inputs">
+                    <label for="nodeSize" class = "inputs-label">Node Size</label>
+                    <input type="number" class = "inputs-box" id = "node-input" name="nodeSize" placeholder="12">
                     <label for="chordSize" class = "inputs-label">Chord Size</label>
-                    <input type="number" class = "inputs-box" id = Chord-input name="chordSize">
-                    <label for="nodeSize" class = "inputs-label" >Node Size</label>
-                    <input type="number" class = "inputs-box" id = Node-input name="nodeSize">
-                    <button class = "button submit-button">Submit</button>
+                    <input type="number" class = "inputs-box" id = "chord-input" name="chordSize" placeholder="3">
+                    <button type = "button" class = "button submit-button" id ="submit">Submit</button>
+                </div>
+                <div id = "details">
                 </div>
                 <div class = " control-buttons" id="control-buttons" >
-                    <button type ="button" class="button button_start" id="start">Start</button>
+                    <button type ="button" class="button button_start hidden" id="start">Start</button>
                 </div>
-                
+                <div class = "current-path" id="current-path">
+                    <p id = "ham-path"></p>
+                </div>
             </div>
         </div>
 
