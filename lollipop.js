@@ -111,6 +111,8 @@
             steps++;
         }
 
+        ham_paths.push([...ham_paths[ham_paths.length - 1], 0]);
+
         return ham_paths;
         // const output = `Chord Length: ${this.chords[0][1]}\nNumber of vertices: ${this.verticies}\nSteps ${steps}\nLog steps: ${Math.floor(Math.log(steps, 2))}`;
         // fs.writeFile("./output.txt", output, (err) => {
@@ -187,7 +189,6 @@
 
         //Need to show if connection will be red or not, need an attribute to decide if this edge is in hamiltonanian cycle
         //Should have all the edges and can loop and add attribute to it with true or false
-        console.log(ham_path)
         for(let i = 0; i < ham_path.length ; i++){
             for(let j = 0 ; j < edges.length; j++){
                 if(ham_path[i] < ham_path[i+1]) {

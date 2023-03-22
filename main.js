@@ -36,13 +36,13 @@ function initial_path_finding(){
     back.className = "back_button";
     back.id = "back_button"
     back.innerHTML = "BACK";
-    document.getElementById("controls").appendChild(back);
+    document.getElementById("control-buttons").appendChild(back);
 
     const next = document.createElement("button");
     next.className = "next_button";
     next.id = "next_button"
     next.innerHTML = "NEXT";
-    document.getElementById("controls").appendChild(next);
+    document.getElementById("control-buttons").appendChild(next);
 
         
     document.getElementById("next_button").onclick = next_path_finding;
@@ -50,12 +50,12 @@ function initial_path_finding(){
 
     function next_path_finding(){
         //pass the next Hamiltonian cycle in if the next button is pressed
-        if(index < paths.length){
+        if(index < paths.length - 1){
             index++;
             lol.print_graph(paths[index]);
         }
         else{
-            lol.print_graph(paths[0], false);
+            lol.print_graph(paths[paths.length - 1]);
         }
 
         
@@ -64,13 +64,11 @@ function initial_path_finding(){
     function back_path_finding(){
     //go back a step to previous hamitlonian path if this is pressed
         //do an if if below 0
-        if(index >= 0){
+        if(index > 0){
             index--;
             lol.print_graph(paths[index])
         }
-        else{
-            lol.print_graph(paths[0], false);
-        }
+        console.log(index)
     }
 
 }
