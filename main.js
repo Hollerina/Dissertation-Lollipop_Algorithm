@@ -2,6 +2,7 @@
 // const Lollipop = require('./lollipop.js')
 let lol;
 let paths;
+let index = 0;
 try{
     const g = graph(12, 3);
 
@@ -16,30 +17,34 @@ try{
 
 }
 catch(e){
-    console.log("ERROR: " + e)
+    alert(`ERROR: ${e}`)
 }
 
 //create an index to loop through 
-let index = 0;
+
 
 //Now have each path need event listeners to see when a button is clicked to see if it go or not
 document.getElementById("start").onclick = initial_path_finding;
 
 function initial_path_finding(){
+    window.onresize = () => {
+        lol.print_graph(paths[index])
+    }
     //This function wil begin the process of starting cycle.
     //need to pass to print_graph the current Hamiltonian path which will be highlighted red
 
     lol.print_graph(paths[index])
 
+    //Once the simulation is began remove the start button
     document.getElementById("start").remove();
     const back = document.createElement("button");
-    back.className = "back_button";
+    back.className = "button back_button";
     back.id = "back_button"
     back.innerHTML = "BACK";
     document.getElementById("control-buttons").appendChild(back);
 
     const next = document.createElement("button");
-    next.className = "next_button";
+    next.className = "button next_button";
     next.id = "next_button"
     next.innerHTML = "NEXT";
     document.getElementById("control-buttons").appendChild(next);
