@@ -21,7 +21,11 @@
                 </div>
             </div>
             <div id = "controls">
-                <div class = "inputs" id = "inputs">
+                <div class="choices" id = "choices">
+                    <button type = "button" class="button choice-button" id = "own-input">Input own values</button>
+                    <button type = "button" class="button choice-button" id = "random-input">Random</button>
+                </div>
+                <div class = "inputs hidden" id = "inputs">
                     <label for="nodeSize" class = "inputs-label">Node Size</label>
                     <input type="number" class = "inputs-box" id = "node-input" name="nodeSize" placeholder="12">
                     <label for="chordSize" class = "inputs-label">Chord Size</label>
@@ -30,11 +34,19 @@
                 </div>
                 <div id = "details">
                 </div>
+                <div class ="random hidden" id = "random">
+                    <label for="chordSizeRandom" class = "inputs-label">Chord Size</label>
+                    <input type ="number" class="inputs-box" id = "random-chord-input" name = "chordSizeRandom">
+                    <button type = "button" class = "button random-button" id = "random-button">Random</button>
+                </div>
                 <div class = " control-buttons" id="control-buttons" >
                     <button type ="button" class="button button_start hidden" id="start">Start</button>
                 </div>
                 <div class = "current-path" id="current-path">
                     <p id = "ham-path"></p>
+                </div>
+                <div class = "finish-button" id = "finish-button">
+                    <button type = "button" class = "button hidden" id = "finish">Finish</button>
                 </div>
             </div>
         </div>

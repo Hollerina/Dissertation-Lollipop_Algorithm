@@ -92,7 +92,6 @@ body,html{
     font-family: 'Roboto Mono', monospace;
     background-color: #f8f0e7;
     width: 50%;
-    /* margin-top: 20px; */
     border:  1.5px solid #BC6C25;
     border-radius: 5px;
     font-size: 100%;
@@ -161,10 +160,74 @@ body,html{
     margin-top: 2%;
 }
 
-.hidden{
-    display: none;
-}
 
 #ham-path{
     justify-content: center;
+}
+#details{
+    font-family:'Roboto Mono', monospace;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+#current-path{
+    font-family:'Roboto Mono', monospace;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.finish-button{
+    font-family:'Roboto Mono', monospace;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;  
+}
+
+#finish:hover{
+    outline: 1px solid #BC6C25;
+}
+
+.random{
+    font-family:'Roboto Mono', monospace;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;  
+}
+
+.choices{
+    margin-top: 20px;
+    font-family:'Roboto Mono', monospace;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;  
+}
+
+#own-input{
+    width: 40%;
+    margin-right: 20px;
+}
+
+#own-input:hover{
+    outline: 1px solid #BC6C25;
+}
+
+#random-input{
+    width:40%;
+    margin-left: 20px;
+    height: 70px;
+}
+
+#random-input:hover{
+    outline: 1px solid #BC6C25;
+}
+
+.hidden{
+    display: none;
 }
