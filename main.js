@@ -21,35 +21,20 @@ function random_values(){
 }
 
 document.getElementById("submit").onclick = begin_algorithm;
-document.getElementById("random-button").onclick = begin_algorithm;
+document.getElementById("random-button").onclick = random_begin_algorithm;
 
 //Get user input of what the chord size will be CHANGE TO FUNCTION RATHER THAN ARROW FUNCTION
+//This will be for submit
 function begin_algorithm(){
+
     const chord_field = document.getElementById('chord-input');
     const chords = parseInt(chord_field.value);
 
     const node_field = document.getElementById('node-input');
     const nodes = parseInt(node_field.value);
 
-    //remove both fields and just keep inputs
-    document.getElementById('inputs').classList.add('hidden');
-    document.getElementById("random").classList.add("hidden");
-
-    //Create p elements to display the text
-    const newP = document.createElement('p');
-    newP.innerHTML = `Node size: ${nodes}  Chord size: ${chords}`;
-    // document.getElementById
-
-    const detailsDiv = document.createElement('p');
-    detailsDiv.id ="info";
-    detailsDiv.innerHTML = `Node size: ${nodes}  Chord size: ${chords}`
-    document.getElementById("details").appendChild(detailsDiv);
-
-    //Bring back start button
-    document.getElementById("start").classList.remove('hidden');
-    document.getElementById("random-button").classList.add("hidden");
-    console.log(`Creating graph with nodes ${nodes} and chords ${chords}`)
-
+    //intialise error so can use to validate an input
+    let error = "";
 
     try{
         const g = graph(nodes, chords);
@@ -65,10 +50,61 @@ function begin_algorithm(){
     
     }
     catch(e){
+        error = e;
         alert(`ERROR: ${e}`)
+    }
+
+    console.log(error);
+    console.log("This is the val: " + document.getElementById("chord-input").value)
+
+    if(error.length == 0){
+        //remove both fields and just keep inputs
+        document.getElementById('inputs').classList.add('hidden');
+        document.getElementById("random").classList.add("hidden");
+
+        //Create p elements to display the text
+        const newP = document.createElement('p');
+        newP.innerHTML = `Node size: ${nodes}  Chord size: ${chords}`;
+        // document.getElementById
+
+        const detailsDiv = document.createElement('p');
+        detailsDiv.id ="info";
+        detailsDiv.innerHTML = `Node size: ${nodes}  Chord size: ${chords}`
+        document.getElementById("details").appendChild(detailsDiv);
+
+        //Bring back start button
+        document.getElementById("start").classList.remove('hidden');
+        document.getElementById("random-button").classList.add("hidden");
+        console.log(`Creating graph with nodes ${nodes} and chords ${chords}`)
     }
 }
 
+//Create a function for when it is random as will need to randomly select the edges
+function random_begin_algorithm(){
+    const node_field = document.getElementById('random-node-input');
+    const nodes = parseInt(node_field.value);
+
+    //intialise error so can use to validate an input
+    let error = "";
+
+    try{
+        const g = graph(nodes, 0, true);
+
+        lol = new Lollipop(g)
+    
+        paths = lol.execution(0);
+        lol.print_graph(paths[0] , true);
+    
+        window.onresize = () => {
+            lol.print_graph(paths[0] , true)
+        }
+    
+    }
+    catch(e){
+        error = e;
+        alert(`ERROR: ${e}`)
+    }
+}
 
 //Now have each path need event listeners to see when a button is clicked to see if it go or not
 document.getElementById("start").onclick = initial_path_finding;
