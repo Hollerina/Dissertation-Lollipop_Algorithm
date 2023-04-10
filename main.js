@@ -84,6 +84,17 @@ function random_begin_algorithm(){
     const node_field = document.getElementById('random-node-input');
     const nodes = parseInt(node_field.value);
 
+    //add info
+    const detailsDiv = document.createElement('p');
+    detailsDiv.id ="info";
+    detailsDiv.innerHTML = `Node size: ${nodes}  Chord size: Random`
+    document.getElementById("details").appendChild(detailsDiv);
+
+    //remove and add start
+    document.getElementById("random").classList.add("hidden");
+    document.getElementById("start").classList.remove('hidden');
+
+
     //intialise error so can use to validate an input
     let error = "";
 

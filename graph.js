@@ -17,50 +17,113 @@ function graph(num_nodes, chord_len, random = false){
     //Create an array to store what vertices will have degree 3 already, will be used when chord length is even
     let nodes_found = [];
 
-    //For random create an array to select conecting vertices from, will populate later on;
-    let random_nodes = [];
-    //Use a found when finding a random edge to select
-    let found = false;
-    //Counter to loop through unmatched nodes
-    let count = 0;
+    //Create an array of 1's and 0's where 1 shows a connection can't be made here
+    let arr_choices = [...Array(num_nodes)].map(e => Array(num_nodes));
+    //fill the array with zeros
+    arr_choices.map(a => a.fill(0));
+    //Create an array to reset too if need too
+    let arr_reset;
     //Random value
     let random_value = 0;
+    //second random
+    let random_connect = 0;
+    //Create a temp array to hold which values of i can be used to create random link.
+    let temp_arr = [];
+    //object to store each key has each node with value of 0 intialally and if 1 then means that is has 3 connections already.
+    let degree_check = {};
+    //for finding degree
+    let found = false;
+    let found_first = false;
 
     //The for loop will create an array which will contain arrays. In the 
     //contained arrays it should contain the start and end point of a
     //chord for the graph.
-    if(ramdom){
+    if(random){
         if(num_nodes%2 == 0){
-            //Create an array to pick nodes from
+            //Create the inital places where each node cant connect too.
             for(let i = 0; i < num_nodes; i++){
-                random_nodes.push(i);
-            }
+                arr_choices[i][i] = 1;
+                if(i != num_nodes - 1){
+                    arr_choices[i][i + 1] = 1;
+                }
+                else{
+                    arr_choices[i][0] = 1;
+                }
 
-            //Now need to select vertices at random to join up
-            //cant be a node that is already connected too.
-            //maybe recursive?
+                if(i != 0){
+                    arr_choices[i][i - 1] = 1;
+                }
+                else{
+                    arr_choices[i][num_nodes - 1] = 1;
+                }
+                degree_check[i] = 0;
+                
+            }
+            
+            //copy the arr to arr_reset.
+            arr_reset = arr_choices.map((arr) => {
+                return arr.slice();
+            });
+
+            //Pick a random node and another one from the list of nodes in the array at that i in the 2d array where the values are 0.
             while(nodes_found.length != num_nodes){
-                while(!found){
-                    random_value = Math.random(random_nodes.length);
-                    if(random_nodes[count] == 0 && random_nodes[random_value] != 1 && random_nodes[random_value] != num_nodes - 1){
-                        diagram.push([random_nodes[count], random_nodes[random_value]]);
-                        found = true;
-                        nodes_found.push(random_nodes[count]);
-                        nodes_found.push(random_nodes[random_value]);
-                        random_nodes.filter(number_remove => number_remove == random_nodes[count] || number_remove == random_nodes[random_value]);
-                    }
-                    else if(random_nodes[count] == num_nodes - 1 && random_nodes[random_value] != num_nodes - 2 && random_nodes[random_value] != 0){
-                        diagram.push([random_nodes[count], random_nodes[random_value]]);
-                        found = true;
-                        nodes_found.push(random_nodes[count]);
-                        nodes_found.push(random_nodes[random_value]);
-                        random_nodes.filter(number_remove => number_remove == random_nodes[count] || number_remove == random_nodes[random_value]);
-                        
+                //check to see if this is also of degree 3
+                while(!found_first){
+                    random_value = Math.floor(Math.random() * num_nodes);
+                    if(degree_check[random_value] == 0){
+                        found_first = true;
                     }
                 }
-                count++;
-                found = false
+                
+                found_first = false;
+
+                for(let i = 0; i < arr_choices[random_value].length; i++){
+                    if(arr_choices[random_value][i] == 0){
+                        temp_arr.push(i);
+                    }
+                }
+                if(temp_arr.length != 0){
+                    //Create the second connection usng which values can be selected. Check to see if degree 3 connection, can use a found
+                    while(!found){
+                        random_connect = temp_arr[Math.floor(Math.random() * temp_arr.length)];
+                        if(degree_check[random_connect] == 0){
+                            
+                            found = true;
+                        }
+                    }
+                    
+                    //reset found
+                    found = false;
+
+                    //add to object values
+                    degree_check[random_connect] = 1;
+                    degree_check[random_value] = 1;
+
+                    //push the nodes found that create a connection
+                    nodes_found.push(random_value);
+                    nodes_found.push(random_connect);
+
+                    //update the arr_choices to symbolise the new connections.
+                    arr_choices[random_value][random_connect] = 1;
+                    arr_choices[random_connect][random_value] = 1;
+
+                    //push the connection to diagram.
+                    diagram.push([random_value, random_connect]);
+
+                    //reset temp.
+                    temp_arr = [];
+                }
+                else{
+                    diagram = [];
+                    nodes_found = [];
+                    arr_choices = arr_reset.map((arr) => {
+                        return arr.slice();
+                    });
+
+                }
+
             }
+            
         }
         else{
             throw "Invalid node size";
@@ -71,7 +134,6 @@ function graph(num_nodes, chord_len, random = false){
             //need to check if the chord length is even and will need to make sure that number of vertices / chord length is also even too.
             if(chord_len%2 == 0 && (num_nodes / chord_len) % 2 == 0){
                 for(let i = 0; i < num_chords; i++){
-                    console.log("This is where i is: " + (2*i) % num_nodes)
                     if(!nodes_found.includes((2*i) % num_nodes)){
                         diagram.push([(2*i) % num_nodes, ((2*i) + chord_len % num_nodes)]);
                         // push to nodes_found when added so can skip that index if already been matched up.
@@ -81,7 +143,6 @@ function graph(num_nodes, chord_len, random = false){
                 }
                 for(let i = 0; i < num_chords; i++){
                     if(!nodes_found.includes(((2*i) + 1)%num_nodes)){
-                        console.log("HERE")
                         diagram.push([((2*i) + 1)% num_nodes , ((2*i) + 1 + chord_len) % num_nodes]);
                         nodes_found.push(((2*i) + 1) % num_nodes);
                         nodes_found.push(((2*i) + 1 + chord_len) % num_nodes);
