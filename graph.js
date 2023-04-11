@@ -35,6 +35,7 @@ function graph(num_nodes, chord_len, random = false){
     let found = false;
     let found_first = false;
 
+
     //The for loop will create an array which will contain arrays. In the 
     //contained arrays it should contain the start and end point of a
     //chord for the graph.
@@ -67,6 +68,7 @@ function graph(num_nodes, chord_len, random = false){
 
             //Pick a random node and another one from the list of nodes in the array at that i in the 2d array where the values are 0.
             while(nodes_found.length != num_nodes){
+                
                 //check to see if this is also of degree 3
                 while(!found_first){
                     random_value = Math.floor(Math.random() * num_nodes);
@@ -82,6 +84,7 @@ function graph(num_nodes, chord_len, random = false){
                         temp_arr.push(i);
                     }
                 }
+
                 if(temp_arr.length != 0){
                     //Create the second connection usng which values can be selected. Check to see if degree 3 connection, can use a found
                     while(!found){
@@ -91,6 +94,7 @@ function graph(num_nodes, chord_len, random = false){
                             found = true;
                         }
                     }
+
                     
                     //reset found
                     found = false;
@@ -104,6 +108,14 @@ function graph(num_nodes, chord_len, random = false){
                     nodes_found.push(random_connect);
 
                     //update the arr_choices to symbolise the new connections.
+
+                    for(let i = 0; i <arr_choices.length; i++){
+                        arr_choices[random_value][i] = 1;
+                        arr_choices[random_connect][i] = 1;
+                        arr_choices[i][random_value] = 1;
+                        arr_choices[i][random_connect] = 1;
+                    }
+
                     arr_choices[random_value][random_connect] = 1;
                     arr_choices[random_connect][random_value] = 1;
 
@@ -114,11 +126,40 @@ function graph(num_nodes, chord_len, random = false){
                     temp_arr = [];
                 }
                 else{
-                    diagram = [];
-                    nodes_found = [];
-                    arr_choices = arr_reset.map((arr) => {
-                        return arr.slice();
-                    });
+                    nodes_found.pop();
+                    nodes_found.pop();
+                    degree_check[random_connect] = 0;
+                    degree_check[random_value] = 0;
+                    const values = diagram.pop();
+
+                    for(let i = 0; i <arr_choices.length; i++){
+                        if(!nodes_found.includes(i)){
+                            arr_choices[values[0]][i] = 0;
+                            arr_choices[values[1]][i] = 0;
+                            arr_choices[i][values[0]] = 0;
+                            arr_choices[i][values[1]] = 0;
+                        }
+                        
+                    }
+                    for(let i = 0; i < num_nodes; i++){
+                        arr_choices[i][i] = 1;
+                        if(i != num_nodes - 1){
+                            arr_choices[i][i + 1] = 1;
+                        }
+                        else{
+                            arr_choices[i][0] = 1;
+                        }
+        
+                        if(i != 0){
+                            arr_choices[i][i - 1] = 1;
+                        }
+                        else{
+                            arr_choices[i][num_nodes - 1] = 1;
+                        }
+                        degree_check[i] = 0;
+                        
+                        
+                    }
 
                 }
 

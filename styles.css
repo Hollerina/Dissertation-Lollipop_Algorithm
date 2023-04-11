@@ -96,7 +96,6 @@ body,html{
     border-radius: 5px;
     font-size: 100%;
     padding: 10px 5px;
-    line-height: 7px;
     cursor: pointer;
 }
 
@@ -175,6 +174,8 @@ body,html{
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    overflow-wrap: anywhere;
+    text-align: center;
 }
 
 .finish-button{

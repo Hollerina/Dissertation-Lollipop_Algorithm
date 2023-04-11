@@ -138,7 +138,7 @@ function initial_path_finding(){
     //Create a finish button which will automatically take you to the last step of the Algorithm
     document.getElementById("finish").classList.remove("hidden");
     document.getElementById("restart").classList.remove("hidden");
-    curr_path.innerHTML = paths[index];
+    curr_path.innerHTML = paths[index].join(", ");
 
     document.getElementById("finish").onclick = finished;
 
@@ -190,6 +190,9 @@ function initial_path_finding(){
         //Bring back the buttons from the start page
         document.getElementById("own-input").classList.remove("hidden");
         document.getElementById("random-input").classList.remove("hidden");
+
+        //clear canvas
+        d3.selectAll('svg').remove();
     }
 
 }
