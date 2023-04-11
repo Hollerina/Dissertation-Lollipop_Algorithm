@@ -192,17 +192,18 @@
         for(let i = 0; i < ham_path.length ; i++){
             for(let j = 0 ; j < edges.length; j++){
                 if(ham_path[i] < ham_path[i+1]) {
-                    if(edges[j].source.index == ham_path[i] && edges[j].target.index == ham_path[i + 1]){
+                    if((edges[j].source.index == ham_path[i] && edges[j].target.index == ham_path[i + 1]) || (edges[j].source.index == ham_path[i + 1] && edges[j].target.index == ham_path[i])){
                         edges[j].paths = true;
                     }
                 }
                 else {
-                    if(edges[j].target.index == ham_path[i] && edges[j].source.index == ham_path[i + 1]){
+                    if((edges[j].target.index == ham_path[i] && edges[j].source.index == ham_path[i + 1]) || (edges[j].target.index == ham_path[i + 1] && edges[j].source.index == ham_path[i])){
                         edges[j].paths = true;
                     }
                 }
             }
         }
+
         const edge_group = svg.append('g')
                               .selectAll()
                               .data(edges)

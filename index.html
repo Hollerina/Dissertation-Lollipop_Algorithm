@@ -32,7 +32,8 @@
                     <input type="number" class = "inputs-box" id = "chord-input" name="chordSize" placeholder="3">
                     <button type = "button" class = "button submit-button" id ="submit">Submit</button>
                 </div>
-                <div id = "details">
+                <div id = "details" class = "details hidden">
+                    <p id = "info"></p>
                 </div>
                 <div class ="random hidden" id = "random">
                     <label for="chordSizeRandom" class = "inputs-label">Node Size</label>
@@ -41,12 +42,16 @@
                 </div>
                 <div class = " control-buttons" id="control-buttons" >
                     <button type ="button" class="button button_start hidden" id="start">Start</button>
+                    <button type = "button" class = "button hidden back_button" id = "back_button">BACK</button>
+                    <button type = "button" class = "button hidden next_button" id = "next_button">NEXT</button>
+                    
                 </div>
                 <div class = "current-path" id="current-path">
                     <p id = "ham-path"></p>
                 </div>
                 <div class = "finish-button" id = "finish-button">
                     <button type = "button" class = "button hidden" id = "finish">Finish</button>
+                    <button type="button" class="button hidden" id = "restart">Restart</button>
                 </div>
             </div>
         </div>
