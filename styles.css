@@ -101,7 +101,7 @@ body,html{
 
 
 .button_start:hover{
-    border: 2px solid #BC6C25;
+    outline: 1px solid #BC6C25;
 }
 
 .next_button{
@@ -151,6 +151,7 @@ body,html{
     margin:0%;
     padding: 0%;
     flex: 1;
+    width: 20%;
 
     min-height: 24px;
     margin-top: 2%;
@@ -244,6 +245,82 @@ body,html{
 #random-input:hover{
     outline: 1px solid #BC6C25;
 }
+
+.table{
+    margin-top: 20px;
+    font-family:'Roboto Mono', monospace;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    table-layout: auto;
+    width: 100%;  
+}
+.experiment-buttons{
+    margin-top: 20px;
+    font-family:'Roboto Mono', monospace;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; 
+    
+}
+
+.results{
+    margin-top: 20px;
+    font-family:'Roboto Mono', monospace;
+    /* width: 100%;
+    display: flex;
+    flex-wrap: wrap; */
+    justify-content: center;
+    text-align: center;
+    table-layout: auto;
+    width: 95%; 
+}
+
+table, th{
+    border: 2px solid #606c38;
+    border-collapse: collapse;
+    
+}
+
+td{
+    border-left: 2px solid #606c38;
+    
+}
+
+#adding-exp{
+    width:40%;
+    margin-right: 20px;   
+}
+#adding-exp:hover{
+    outline: 1px solid #BC6C25;
+}
+
+#restarting-exp{
+    width:40%;
+    margin-left: 20px;
+}
+
+#restarting-exp:hover{
+    outline: 1px solid #BC6C25;
+}
+
+.green{
+    background-color: #89E773;
+}
+.yellow{
+    background-color: #FFCE0A;
+}
+
+.orange{
+    background-color: #F79646;
+}
+
+.red{
+    background-color: #DE3C4B;
+}
+
 
 .hidden{
     display: none;

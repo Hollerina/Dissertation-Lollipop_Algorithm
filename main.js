@@ -3,6 +3,11 @@
 let lol;
 let paths;
 let index = 0;
+let chords;
+let nodes;
+
+//Create a variable to decide if the start experiemnt button has been clicked
+let exp_decide = false;
 
 //need to display correct things depending on which button was clickecd orginally
 document.getElementById("own-input").onclick = own_values;
@@ -28,10 +33,10 @@ document.getElementById("random-button").onclick = random_begin_algorithm;
 function begin_algorithm(){
 
     const chord_field = document.getElementById('chord-input');
-    const chords = parseInt(chord_field.value);
+    chords = parseInt(chord_field.value);
 
     const node_field = document.getElementById('node-input');
-    const nodes = parseInt(node_field.value);
+    nodes = parseInt(node_field.value);
 
     //intialise error so can use to validate an input
     let error = "";
@@ -76,7 +81,10 @@ function begin_algorithm(){
 //Create a function for when it is random as will need to randomly select the edges
 function random_begin_algorithm(){
     const node_field = document.getElementById('random-node-input');
-    const nodes = parseInt(node_field.value);
+    nodes = parseInt(node_field.value);
+
+    //set chords to equal random so can be used later on.
+    chords = "Random";
 
     //Remove hidden class from details 
     document.getElementById("details").classList.remove("hidden");
@@ -132,6 +140,7 @@ function initial_path_finding(){
         
     document.getElementById("next_button").onclick = next_path_finding;
     document.getElementById("back_button").onclick = back_path_finding;
+    document.getElementById("ham-path").classList.remove("hidden");
 
     const curr_path = document.getElementById("ham-path");
 
@@ -144,6 +153,13 @@ function initial_path_finding(){
 
     //Create path to function for restarting.
     document.getElementById("restart").onclick = restarting;
+    
+    //Check whether to bring the start button back
+    if(!exp_decide){
+        document.getElementById("exp-start").classList.remove("hidden");
+    }
+
+    document.getElementById("exp-start").onclick = experiments;
 
     function next_path_finding(){
         //pass the next Hamiltonian cycle in if the next button is pressed
@@ -182,10 +198,11 @@ function initial_path_finding(){
         //Remove everything currently on the page.
         document.getElementById("restart").classList.add("hidden");
         document.getElementById("finish").classList.add("hidden");
-        document.getElementById("current-path").classList.add("hidden");
+        document.getElementById("ham-path").classList.add("hidden");
         document.getElementById("next_button").classList.add("hidden");
         document.getElementById("back_button").classList.add("hidden");
         document.getElementById("details").classList.add("hidden");
+        document.getElementById("exp-start").classList.add("hidden");
 
         //Bring back the buttons from the start page
         document.getElementById("own-input").classList.remove("hidden");
@@ -193,6 +210,74 @@ function initial_path_finding(){
 
         //clear canvas
         d3.selectAll('svg').remove();
+    }
+
+    //Function for creating the table (the start of in here will have buttons to check what to be done)
+    function experiments(){
+        exp_decide = true;
+        document.getElementById("exp-start").classList.add("hidden");
+        document.getElementById("adding-exp").classList.remove("hidden");
+        document.getElementById("restarting-exp").classList.remove("hidden");
+
+        document.getElementById("table").classList.remove("hidden");
+
+        document.getElementById("adding-exp").onclick = add_exp;
+        document.getElementById("restarting-exp").onclick = restart_exp;
+
+        
+
+        //function to add experiment to the table.
+        function add_exp(){ 
+
+            let info = [nodes, chords, paths.length, Math.floor(Math.log2(paths.length))];
+
+            console.log(info)
+
+            const tr = document.getElementById("results").insertRow();
+
+            for(let i = 0; i < 4; i++){
+                const td = tr.insertCell();
+                td.appendChild(document.createTextNode(info[i]));
+            }
+
+            //Use javascrip to add a class to table element so then can change the colour of it depending on fast level
+            if(info[3] <= 5){
+                tr.classList.add("green");
+            }
+            else if(info[3] <= 10){
+                tr.classList.add("yellow");
+            }
+            else if(info[3] <= 15){
+                tr.classList.add("orange");
+            }
+            else{
+                tr.classList.add("red");
+            }
+        }
+
+        //Create a function which will restart the expereiments, bring back start experiments and reset the table
+        function restart_exp(){
+
+            //firstly will need to remove the rows that arent needed
+            let table = document.getElementById("results");
+            let row_count = table.rows.length;
+
+            for(let i = 1; i < row_count; i++){
+                document.getElementById("results").deleteRow(1);
+            }
+
+            //remove buttons by hidding them
+            document.getElementById("adding-exp").classList.add("hidden");
+            document.getElementById("restarting-exp").classList.add("hidden");           
+
+            //now make the table hidden
+            document.getElementById("table").classList.add("hidden");
+
+            //bring back the start experiment button and set exp_start = false;
+            document.getElementById("exp-start").classList.remove("hidden");
+            exp_decide = false;
+        }
+
     }
 
 }
