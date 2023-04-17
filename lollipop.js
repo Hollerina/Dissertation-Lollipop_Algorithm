@@ -1,6 +1,4 @@
-// const fs = require('fs')
-
-/*module.exports =*/ class Lollipop{
+class Lollipop{
     /**
      * 
      * @param {Array<Array<Number>} chords 

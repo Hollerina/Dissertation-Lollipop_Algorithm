@@ -1,46 +1,72 @@
-// const graph = require('./graph.js')
-// const Lollipop = require('./lollipop.js')
+/**
+ * Main Method:
+ * 
+ * In the main Method a variety of actions take place:
+ *  
+ *      1)Create a lollipop object to call the two methods execute and print graph.
+ *      2)Onlick to see when buttons are pressed and then direct them to the correct functions and actions needed.
+ */
 let lol;
 let paths;
 let index = 0;
 let chords;
 let nodes;
-
-//Create a variable to decide if the start experiemnt button has been clicked
 let exp_decide = false;
 
-//need to display correct things depending on which button was clickecd orginally
+//Calling functions depending whether own-input or random-input was clicked.
 document.getElementById("own-input").onclick = own_values;
 document.getElementById("random-input").onclick = random_values;
 
+/**
+ * own_values:
+ * 
+ * Will remove the orginal buttons displayed on the screen and bring the "inputs" set of buttons.
+ */
 function own_values(){
     document.getElementById("own-input").classList.add("hidden");
     document.getElementById("random-input").classList.add("hidden");
     document.getElementById("inputs").classList.remove("hidden");
 }
 
+/**
+ * random_values:
+ * 
+ * Will remove the orginal buttons displayed on the screen and bring the "random" set of buttons.
+ */
 function random_values(){
     document.getElementById("own-input").classList.add("hidden");
     document.getElementById("random-input").classList.add("hidden");
     document.getElementById("random").classList.remove("hidden");
 }
 
+//point to correct functions depening on the onclick
 document.getElementById("submit").onclick = begin_algorithm;
 document.getElementById("random-button").onclick = random_begin_algorithm;
 
-//Get user input of what the chord size will be CHANGE TO FUNCTION RATHER THAN ARROW FUNCTION
-//This will be for submit
+/**
+ * begin_algorithm:
+ * 
+ * This function is called when the user selects own-input at the inital stage.
+ * Here is a list of things this functions does:
+ * 
+ *      1)Set control display to the next stage.
+ *      2)Create a lollipop object.
+ *      3)Use the object to call execution which will return an array of the paths.
+ *      4)Print(display) the graph with no Hamiltonian paths present.
+ */
 function begin_algorithm(){
-
+    
+    //getting the user input for chord size and node size.
     const chord_field = document.getElementById('chord-input');
     chords = parseInt(chord_field.value);
 
     const node_field = document.getElementById('node-input');
     nodes = parseInt(node_field.value);
 
-    //intialise error so can use to validate an input
+    //intialise error so can use to validate an input.
     let error = "";
 
+    //An error can be thrown from the graph as user my have invalid input. In this case alert used to display this.
     try{
         const g = graph(nodes, chords);
 
@@ -62,11 +88,11 @@ function begin_algorithm(){
     console.log(error);
     console.log("This is the val: " + document.getElementById("chord-input").value)
 
+    //If there is no error then can proceed to bringing next set of controls up.
     if(error.length == 0){
         //remove both fields and just keep inputs
         document.getElementById('inputs').classList.add('hidden');
         document.getElementById("random").classList.add("hidden");
-
 
         document.getElementById("details").classList.remove("hidden");
         let detailsDiv = document.getElementById("info");
@@ -78,7 +104,17 @@ function begin_algorithm(){
     }
 }
 
-//Create a function for when it is random as will need to randomly select the edges
+/**
+ * random_begin_algorithm:
+ * 
+ * This function is called when the user selects random-input at the inital stage.
+ * Here is a list of things this functions does:
+ * 
+ *      1)Set control display to the next stage.
+ *      2)Create a lollipop object.
+ *      3)Use the object to call execution which will return an array of the paths.
+ *      4)Print(display) the graph with no Hamiltonian paths present.
+ */
 function random_begin_algorithm(){
     const node_field = document.getElementById('random-node-input');
     nodes = parseInt(node_field.value);
@@ -86,7 +122,7 @@ function random_begin_algorithm(){
     //set chords to equal random so can be used later on.
     chords = "Random";
 
-    //Remove hidden class from details 
+    //Remove hidden class from details.
     document.getElementById("details").classList.remove("hidden");
     let detailsDiv = document.getElementById("info");
     detailsDiv.innerHTML = `Node size: ${nodes}  Chord size: Random`
@@ -118,49 +154,66 @@ function random_begin_algorithm(){
     }
 }
 
-//Now have each path need event listeners to see when a button is clicked to see if it go or not
+//At this stage the array of the paths that the algorithm uses has already been created. User is presented with a start button no matter the inital selection. 
 document.getElementById("start").onclick = initial_path_finding;
 
+/**
+ * initial_path_finding:
+ * 
+ * This function is where the step by step of the algorithm occurs.
+ * Here is a list of things that the function does:
+ * 
+ *      1)Create the next set on control buttons.
+ *      2)Functions next and backwards to walk through the path array.
+ *      3)Finish button which will take to the last element in the path array.
+ *      4)Restarting which will allow user to go to next experiment.
+ *      5)Experiments will allow user to add to the experiment table.
+ */
 function initial_path_finding(){
     window.onresize = () => {
         lol.print_graph(paths[index])
     }
-    //This function wil begin the process of starting cycle.
-    //need to pass to print_graph the current Hamiltonian path which will be highlighted red
 
+    //Will print the graph at the current index
     lol.print_graph(paths[index])
 
-    //Once the simulation is began remove the start button , want to create finish button too
-
+    //Remove the start button
     document.getElementById("start").classList.add("hidden");
 
     //get next and back buttons.
     document.getElementById("next_button").classList.remove("hidden");
     document.getElementById("back_button").classList.remove("hidden");
-        
+    
+    //Point to functions for when buttons are pressed
     document.getElementById("next_button").onclick = next_path_finding;
     document.getElementById("back_button").onclick = back_path_finding;
-    document.getElementById("ham-path").classList.remove("hidden");
 
+    //bring Ham-path element back to display to the user what the current path is.
+    document.getElementById("ham-path").classList.remove("hidden");
     const curr_path = document.getElementById("ham-path");
+    curr_path.innerHTML = paths[index].join(", ");
 
     //Create a finish button which will automatically take you to the last step of the Algorithm
     document.getElementById("finish").classList.remove("hidden");
     document.getElementById("restart").classList.remove("hidden");
-    curr_path.innerHTML = paths[index].join(", ");
 
     document.getElementById("finish").onclick = finished;
 
     //Create path to function for restarting.
     document.getElementById("restart").onclick = restarting;
     
-    //Check whether to bring the start button back
+    //Check whether to bring the experiment button back. If an experiment set already in place then don't want to bring the experiment start button back.
     if(!exp_decide){
         document.getElementById("exp-start").classList.remove("hidden");
     }
 
     document.getElementById("exp-start").onclick = experiments;
 
+    /**
+     * next_path_finding:
+     * 
+     * This function main purpose is to display the next step in the algorithm
+     */
     function next_path_finding(){
         //pass the next Hamiltonian cycle in if the next button is pressed
         if(index < paths.length - 1){
@@ -175,6 +228,11 @@ function initial_path_finding(){
         
     }
 
+    /**
+     * back_path_finding:
+     * 
+     * This function main purpose is to display the back step in the algorithm.
+     */
     function back_path_finding(){
     //go back a step to previous hamitlonian path if this is pressed
         //do an if if below 0
@@ -186,12 +244,22 @@ function initial_path_finding(){
         curr_path.innerHTML = paths[index];
     }
 
+    /**
+     * finished:
+     * 
+     * Send user to last step in the algorithm
+     */
     function finished(){
         index = paths.length - 1;
         lol.print_graph(paths[index]);
         curr_path.innerHTML = paths[index]
     }
 
+    /**
+     * restarting:
+     * 
+     * This function allows for the user to start a new experiment.
+     */
     function restarting(){
         //This function will take back to the original format of the page to start a new experiment with the algorithm.
 
@@ -212,7 +280,11 @@ function initial_path_finding(){
         d3.selectAll('svg').remove();
     }
 
-    //Function for creating the table (the start of in here will have buttons to check what to be done)
+    /**
+     * experiments:
+     * 
+     * This function will create a table to displaye the experiments
+     */
     function experiments(){
         exp_decide = true;
         document.getElementById("exp-start").classList.add("hidden");
@@ -224,9 +296,11 @@ function initial_path_finding(){
         document.getElementById("adding-exp").onclick = add_exp;
         document.getElementById("restarting-exp").onclick = restart_exp;
 
-        
-
-        //function to add experiment to the table.
+        /**
+         * add_exp:
+         * 
+         * This function is to add an experiment to the table
+         */
         function add_exp(){ 
 
             let info = [nodes, chords, paths.length, Math.floor(Math.log2(paths.length))];
@@ -240,7 +314,7 @@ function initial_path_finding(){
                 td.appendChild(document.createTextNode(info[i]));
             }
 
-            //Use javascrip to add a class to table element so then can change the colour of it depending on fast level
+            //Use javascript to add a class to table element so then can change the colour of it depending on fast level
             if(info[3] <= 5){
                 tr.classList.add("green");
             }
@@ -255,7 +329,11 @@ function initial_path_finding(){
             }
         }
 
-        //Create a function which will restart the expereiments, bring back start experiments and reset the table
+        /**
+         * restart_exp:
+         * 
+         * This function will allow for the user to reset the experiments that have already been conducted by wiping the entire table
+         */
         function restart_exp(){
 
             //firstly will need to remove the rows that arent needed
