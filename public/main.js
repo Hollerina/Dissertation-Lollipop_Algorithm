@@ -122,14 +122,7 @@ function random_begin_algorithm(){
     //set chords to equal random so can be used later on.
     chords = "Random";
 
-    //Remove hidden class from details.
-    document.getElementById("details").classList.remove("hidden");
-    let detailsDiv = document.getElementById("info");
-    detailsDiv.innerHTML = `Node size: ${nodes}  Chord size: Random`
-
-    //remove and add start
-    document.getElementById("random").classList.add("hidden");
-    document.getElementById("start").classList.remove('hidden');
+ 
 
 
     //intialise error so can use to validate an input
@@ -152,6 +145,23 @@ function random_begin_algorithm(){
         error = e;
         alert(`ERROR: ${e}`)
     }
+    console.log(error);
+    
+    if(error.length == 0){
+        //remove both fields and just keep inputs
+        document.getElementById('inputs').classList.add('hidden');
+        document.getElementById("random").classList.add("hidden");
+
+        //Remove hidden class from details.
+        document.getElementById("details").classList.remove("hidden");
+        let detailsDiv = document.getElementById("info");
+        detailsDiv.innerHTML = `Node size: ${nodes}  Chord size: Random`
+
+        //remove and add start
+        document.getElementById("random").classList.add("hidden");
+        document.getElementById("start").classList.remove('hidden');
+    }
+
 }
 
 //At this stage the array of the paths that the algorithm uses has already been created. User is presented with a start button no matter the inital selection. 
@@ -191,7 +201,10 @@ function initial_path_finding(){
     //bring Ham-path element back to display to the user what the current path is.
     document.getElementById("ham-path").classList.remove("hidden");
     const curr_path = document.getElementById("ham-path");
-    curr_path.innerHTML = paths[index].join(", ");
+    if(paths[index].length <= 100){
+        curr_path.innerHTML = paths[index].join(", ");
+    }
+    
 
     //Create a finish button which will automatically take you to the last step of the Algorithm
     document.getElementById("finish").classList.remove("hidden");
@@ -205,6 +218,10 @@ function initial_path_finding(){
     //Check whether to bring the experiment button back. If an experiment set already in place then don't want to bring the experiment start button back.
     if(!exp_decide){
         document.getElementById("exp-start").classList.remove("hidden");
+        document.getElementById("experiment-buttons").classList.remove("hidden");
+    }
+    else{
+        document.getElementById("experiment-buttons").classList.remove("hidden");
     }
 
     document.getElementById("exp-start").onclick = experiments;
@@ -224,7 +241,10 @@ function initial_path_finding(){
             lol.print_graph(paths[paths.length - 1]);
         }
 
-        curr_path.innerHTML = paths[index];
+        if(paths[index].length <= 100){
+            curr_path.innerHTML = paths[index];
+        }
+        
         
     }
 
@@ -241,7 +261,10 @@ function initial_path_finding(){
             lol.print_graph(paths[index])
         }
         console.log(index)
-        curr_path.innerHTML = paths[index];
+        if(paths[index].length <= 100){
+            curr_path.innerHTML = paths[index];
+        }
+        
     }
 
     /**
@@ -252,7 +275,10 @@ function initial_path_finding(){
     function finished(){
         index = paths.length - 1;
         lol.print_graph(paths[index]);
-        curr_path.innerHTML = paths[index]
+        if(paths[index] <= 100){
+            curr_path.innerHTML = paths[index];
+        }
+        
     }
 
     /**
@@ -271,13 +297,18 @@ function initial_path_finding(){
         document.getElementById("back_button").classList.add("hidden");
         document.getElementById("details").classList.add("hidden");
         document.getElementById("exp-start").classList.add("hidden");
+        document.getElementById("experiment-buttons").classList.add("hidden");
 
         //Bring back the buttons from the start page
         document.getElementById("own-input").classList.remove("hidden");
         document.getElementById("random-input").classList.remove("hidden");
 
+
         //clear canvas
         d3.selectAll('svg').remove();
+
+        //reset the index 
+        index = 0;
     }
 
     /**
@@ -287,9 +318,11 @@ function initial_path_finding(){
      */
     function experiments(){
         exp_decide = true;
+        document.getElementById("experiment-buttons").classList.remove("hidden");
         document.getElementById("exp-start").classList.add("hidden");
         document.getElementById("adding-exp").classList.remove("hidden");
         document.getElementById("restarting-exp").classList.remove("hidden");
+        
 
         document.getElementById("table").classList.remove("hidden");
 
@@ -303,7 +336,7 @@ function initial_path_finding(){
          */
         function add_exp(){ 
 
-            let info = [nodes, chords, paths.length, Math.floor(Math.log2(paths.length))];
+            let info = [nodes, chords, paths.length - 2, Math.floor(Math.log2(paths.length - 2))];
 
             console.log(info)
 

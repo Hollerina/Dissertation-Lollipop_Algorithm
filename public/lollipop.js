@@ -244,5 +244,5 @@ class Lollipop{
                                         .attr('y', (n) => n.y+4);
 
 
-    } 
+    }
 }
