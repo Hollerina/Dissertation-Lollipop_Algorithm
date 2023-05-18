@@ -11,7 +11,6 @@
  * 
  */
 function graph(num_nodes, chord_len, random = false){
-    console.log(`Nodes: ${num_nodes}, Chords: ${chord_len}`)
     let diagram = [];
     let num_chords = num_nodes/2;
     //Create an array to store what vertices will have degree 3 already, will be used when chord length is even
@@ -34,6 +33,9 @@ function graph(num_nodes, chord_len, random = false){
     //for finding degree
     let found = false;
     let found_first = false;
+
+    //counter
+    let count = 0;
 
 
     //The for loop will create an array which will contain arrays. In the 
@@ -67,8 +69,8 @@ function graph(num_nodes, chord_len, random = false){
             });
 
             //Pick a random node and another one from the list of nodes in the array at that i in the 2d array where the values are 0.
-            while(nodes_found.length != num_nodes){
-                
+            while(nodes_found.length != num_nodes && count < 500){
+
                 //check to see if this is also of degree 3
                 while(!found_first){
                     random_value = Math.floor(Math.random() * num_nodes);
@@ -163,6 +165,12 @@ function graph(num_nodes, chord_len, random = false){
 
                 }
 
+                count++;
+
+            }
+
+            if(count >= 500){
+                return 0;
             }
             
         }
@@ -171,7 +179,7 @@ function graph(num_nodes, chord_len, random = false){
         }
     }
     else{
-        if(num_nodes%chord_len == 0 && num_nodes%2 == 0){
+        if(num_nodes%2 == 0){
             //need to check if the chord length is even and will need to make sure that number of vertices / chord length is also even too.
             if(chord_len%2 == 0 && (num_nodes / chord_len) % 2 == 0){
                 for(let i = 0; i < num_chords; i++){
@@ -184,10 +192,21 @@ function graph(num_nodes, chord_len, random = false){
                 }
                 for(let i = 0; i < num_chords; i++){
                     if(!nodes_found.includes(((2*i) + 1)%num_nodes)){
-                        diagram.push([((2*i) + 1)% num_nodes , ((2*i) + 1 + chord_len) % num_nodes]);
-                        nodes_found.push(((2*i) + 1) % num_nodes);
-                        nodes_found.push(((2*i) + 1 + chord_len) % num_nodes);
+                        if((((2*i) + 1)%num_nodes) > num_nodes / 4 && (((2*i) + 1)%num_nodes) < (3*num_nodes) / 4){
+                            diagram.push([((2*i) + 1)% num_nodes , ((2*i) + 1 + chord_len) % num_nodes]);
+                            nodes_found.push(((2*i) + 1) % num_nodes);
+                            nodes_found.push(((2*i) + 1 + chord_len) % num_nodes);                            
+                        }
+                        else {
+                            diagram.push([((2*i) + 1)% num_nodes , ((2*i) + 1)% num_nodes + (num_nodes - chord_len)])
+                            nodes_found.push(((2*i) + 1) % num_nodes);
+                            nodes_found.push(((2*i) + 1)% num_nodes + (num_nodes - chord_len));   
+                        }
                     }
+                    //     diagram.push([((2*i) + 1)% num_nodes , ((2*i) + 1 + chord_len) % num_nodes]);
+                    //     nodes_found.push(((2*i) + 1) % num_nodes);
+                    //     nodes_found.push(((2*i) + 1 + chord_len) % num_nodes);
+                    // }
                 }
             }
             else if(chord_len%2 == 1){
@@ -204,7 +223,5 @@ function graph(num_nodes, chord_len, random = false){
             throw "Invlaid graph: Graph cannot be made with this chord length and number of nodes"
         }
     }
-    
-    console.log(diagram)
     return diagram;
 }

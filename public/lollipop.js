@@ -103,6 +103,7 @@ class Lollipop{
                 closing_connections.splice(closing_connections.indexOf(new_ham_path[new_ham_path.length-2]), 1);
             }
             current_chord = closing_connections[0];
+            
             ham_paths.push(current_path)
             connect_chords.push(current_chord)
             new_ham_path = [];

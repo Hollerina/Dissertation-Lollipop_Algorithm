@@ -8,6 +8,8 @@
         <style>@import url('https://fonts.googleapis.com/css2?family=Sofia+Sans+Semi+Condensed:wght@300&display=swap');</style>
         <style>@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap');</style>
         <script src="https://d3js.org/d3.v7.min.js"></script>
+        <script type="text/javascript" src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
+
         <script defer src = "main.js" type="text/javascript"></script>
     </head>
     <body>
@@ -17,13 +19,21 @@
                     <h1 id = "h1_id">Lollipop Algorithm Simulation</h1>
                 </div>
                 <div id = "graph" class = "background-graph">
-                    
+                    <table id = "experiment" class="hidden experimental ">
+                        <tr id="header">
+                            <th class="table-corner">
+                                &nbsp;&nbsp;&nbsp;&nbsp;\ k→ <br>n↓ \ 
+                            </th>
+                        </tr>
+                    </table>
                 </div>
             </div>
             <div id = "controls">
                 <div class="choices" id = "choices">
                     <button type = "button" class="button choice-button" id = "own-input">Input own values</button>
                     <button type = "button" class="button choice-button" id = "random-input">Random</button>
+                    <button type = "button" class ="button choice-button" id = "normal-tests">Normal Graph Experiments</button>
+                    <button type = "button" class= "button choice-button" id = "random-tests">Random Graph Experiments</button>
                 </div>
                 <div class = "inputs hidden" id = "inputs">
                     <label for="nodeSize" class = "inputs-label">Node Size</label>
@@ -40,32 +50,56 @@
                     <input type ="number" class="inputs-box" id = "random-node-input" name = "chordSizeRandom">
                     <button type = "button" class = "button random-button" id = "random-button">Submit</button>
                 </div>
-                <div class = " control-buttons" id="control-buttons" >
+                <div class = " control-buttons hidden" id="control-buttons" >
                     <button type ="button" class="button button_start hidden" id="start">Start</button>
                     <button type = "button" class = "button hidden back_button" id = "back_button">BACK</button>
                     <button type = "button" class = "button hidden next_button" id = "next_button">NEXT</button>
                     
                 </div>
-                <div class = "current-path" id="current-path">
+                <div class = "current-path hidden" id="current-path">
                     <p id = "ham-path"></p>
                 </div>
-                <div class = "finish-button" id = "finish-button">
-                    <button type = "button" class = "button hidden" id = "finish">Finish</button>
-                    <button type="button" class="button hidden" id = "restart">Restart</button>
+                <div class = "finish-button hidden" id = "finish-button">
+                    <button type = "button" class = "button" id = "finish">Finish</button>
+                    <button type="button" class="button" id = "restart">Restart</button>
                 </div>
                 <div class = "experiment-buttons" id ="experiment-buttons">
                     <button type = "button" class = "hidden begin button" id = "exp-start">Start Experiment Set</button>
                     <button type="button" class = "hidden button begin-start" id = "adding-exp">Add Experiment</button>
                     <button type="button" class = "hidden button begin-start" id = "restarting-exp">Restart Experiments</button>
                 </div>
-                <div class ="table hidden" id = "table">
-                    <table id = "results" class = "results">
-                        <th>Vertices</th>
-                        <th>Chords</th>
-                        <th>Steps</th>
-                        <th>log Steps</th>
+                <div class ="table hidden " id = "table">
+                    <table id = "results" class = "results tab-des">
+                        <th class = "tab-des">Vertices</th>
+                        <th class = "tab-des">Chords</th>
+                        <th class = "tab-des">Steps</th>
+                        <th class = "tab-des">log Steps</th>
                     </table>
                 </div>
+                <div class = "regular-experiment hidden" id = "regular-experiment">
+                    <div>
+                        <label for="nodeStart" class="inputs-label node-start exp-label">Nodes start point:</label>
+                        <input type="number" class="inputs-box node-start" id = "regular-exp-start-input" name = "nodeStart">
+                    </div>
+                    <div>
+                        <label for="nodeEnd" class="inputs-label node-end exp-label">Nodes end point:</label>
+                        <input type="number" class="inputs-box node-end" id = "regular-exp-end-input" name = "nodeEnd">       
+                    </div>
+                    <div>
+                        <label for="NodeStep" class="inputs-label node-step exp-label">Node step size:</label>
+                        <input type="number" class="inputs-box node-step" id = "regular-exp-step-input" name = "NodeStep">
+                    </div>
+                    <div>
+                        <button type="button" class="button " id= "exp-submit">Submit</button>
+                    </div>
+                    <div class="hidden restarter" id= "restarter">
+                        <button type="button" class="button" id ="exp-restart">Restart</button>
+                    </div>
+                </div>
+                <div class = "hidden counter" id="random-count">
+                    <button type="button" class="button" id = "ran-restart">Restart</button>
+                </div>  
+                
             </div>
         </div>
 

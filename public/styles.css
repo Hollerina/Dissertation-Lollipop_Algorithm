@@ -218,6 +218,23 @@ body,html{
     justify-content: center;  
 }
 
+.regular-experiment{
+    font-family: 'Roboto Mono', monospace;
+    
+    width: 100%;
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr;
+    text-align: center;
+    grid-gap: 20px;
+}
+.exp-label{
+    font-size: 1.5em;
+}
+
+#exp-restart:hover{
+    outline: 1px solid #bc6c25;
+}
+
 .choices{
     margin-top: 20px;
     font-family:'Roboto Mono', monospace;
@@ -244,6 +261,64 @@ body,html{
 
 #random-input:hover{
     outline: 1px solid #BC6C25;
+}
+
+#normal-tests{
+    margin-right: 20px;
+    margin-top: 20px;
+    width: 40%;
+    height: 70px;
+}
+
+#normal-tests:hover{
+    outline: 1px solid #BC6C25;
+}
+
+#random-tests{
+    margin-left: 20px;
+    margin-top: 20px;
+    width: 40%;
+    height: 70px;
+}
+
+#random-tests:hover{
+    outline: 1px solid #bc6c25;
+}
+
+.experimental{
+    margin: 20px;
+    font-family:'Roboto Mono', monospace;
+    border: 2px solid black;
+    border-collapse: collapse;
+}
+
+.table-corner{
+    border-right: 2px solid black;
+    border-bottom: 2px solid black;
+}
+
+.table-heading-col{
+    border-bottom: 2px solid black;
+}
+
+.table-heading-row{
+    border-right: 2px solid black;
+}
+
+.no-marg{
+    text-align: center;
+    border-collapse: collapse;
+}
+
+#exp-submit:hover{
+    outline: 1px solid #bc6c25;
+}
+
+.counter{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
 .table{
@@ -278,13 +353,13 @@ body,html{
     width: 95%; 
 }
 
-table, th{
+.tab-des{
     border: 2px solid #606c38;
     border-collapse: collapse;
     
 }
 
-td{
+.tr-single{
     border-left: 2px solid #606c38;
     
 }
@@ -306,19 +381,40 @@ td{
     outline: 1px solid #BC6C25;
 }
 
+.dark-green{
+    background-color: #25b84d;
+}
+
 .green{
     background-color: #89E773;
 }
+
+.light-yellow{
+    background-color: #eff140;
+}
+
 .yellow{
     background-color: #FFCE0A;
+}
+
+.dark-orange{
+    background-color: #e86e0a;
 }
 
 .orange{
     background-color: #F79646;
 }
 
+.dark-red{
+    background-color: #be1423;
+}
+
 .red{
     background-color: #DE3C4B;
+}
+
+.grey{
+    background-color: #d3d3d3;
 }
 
 
