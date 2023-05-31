@@ -410,8 +410,6 @@ function initial_path_finding(){
 //Function that will run a set of experiments on normal graphs
 function experiment_set(){
 
-    //HOLLY HAVE A RETHINK OF THE NODE STEP THING AS DOESNT WORK ALWAYS ? MAYBE IT REALISTICALLY COULD JUST LOOP THROUGH THE ODDS FROM 3 I THINK THAT COULD WORK
-
     //remove the old buttons
     document.getElementById("own-input").classList.add("hidden");
     document.getElementById("random-input").classList.add("hidden");
@@ -421,6 +419,7 @@ function experiment_set(){
     //Bring in the beggining of the table within the graph box
     document.getElementById("experiment").classList.remove("hidden");
     document.getElementById("restarter").classList.remove("hidden");
+    document.getElementById("exp-submit").classList.remove("hidden");
 
     //need to call for user input therefore remove hidden
     document.getElementById("regular-experiment").classList.remove("hidden");
@@ -432,6 +431,13 @@ function experiment_set(){
     document.getElementById("exp-restart").onclick = restart;
 
     function reg_exp(){
+        //Remove submit button and add the download pdf button
+        document.getElementById("exp-submit").classList.add("hidden");
+        document.getElementById("reg_download").classList.remove("hidden");
+
+        //point to the download function
+        document.getElementById("reg_download").onclick = reg_down;
+
         //get the values that user entered
         const node_start = document.getElementById('regular-exp-start-input');
         exp_node_start = parseInt(node_start.value);
@@ -443,6 +449,9 @@ function experiment_set(){
         const headerRow = document.getElementById("header");
 
         let columnIndex = 0;
+
+        //Create variable to store all the data to be converted to a txt file
+        let txt_file = "";
 
         //looping through each iteration of adding to the table element
         //Will need to call lollipop on each one.
@@ -460,6 +469,9 @@ function experiment_set(){
                 td_1.classList.add("no-marg");
                 console.log("step_row ",step_row ,i, j/exp_node_step, i)
                 td_1.appendChild(document.createTextNode(step_row));
+
+                //Add the node size, column size as well as time took
+                txt_file += `${i} ${j/exp_node_step} ${step_row}\n`;
                 
             }
 
@@ -481,6 +493,9 @@ function experiment_set(){
                 td_2.appendChild(document.createTextNode(step_col));
                 
                 value+= exp_node_step;
+
+                //calculate for txt file
+                txt_file += `${value} ${i/exp_node_step} ${step_col}\n`;
             }
             //}
 
@@ -490,9 +505,9 @@ function experiment_set(){
             td.classList.add(colour_gen(step_size));
             td.classList.add("no-marg");
             td.appendChild(document.createTextNode(step_size));
+            txt_file += `${i} ${i/exp_node_step} ${step_size}\n`;
             
         }
-
 
         function get_info(node, chord){
             try{
@@ -536,6 +551,18 @@ function experiment_set(){
                 return "dark-red";
             }
         }
+
+        function reg_down(){
+            let element = document.createElement('a');
+            element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(txt_file))
+            element.setAttribute('download', 'data.txt');
+
+            element.style.display = 'none';
+            document.body.appendChild(element);
+
+            element.click()
+            document.body.removeChild(element);
+        }
     }
 
     function restart(){
@@ -549,6 +576,7 @@ function experiment_set(){
         document.getElementById("experiment").classList.add("hidden");
         document.getElementById("restarter").classList.add("hidden");
         document.getElementById("regular-experiment").classList.add("hidden");
+        document.getElementById("reg_download").classList.add("hidden");
 
         //remove the table
         document.getElementById("experiment").innerHTML = `<tr id="header">
@@ -568,11 +596,15 @@ function experiment_set(){
     document.getElementById("normal-tests").classList.add("hidden");
     document.getElementById("random-tests").classList.add("hidden");
 
-    //Allow for count 
-    document.getElementById("random-count").classList.remove("hidden");
+    document.getElementById("random-experiment").classList.remove("hidden");
 
     //restarting
     document.getElementById("ran-restart").onclick = restart;
+
+    document.getElementById("ran-download").onclick = ran_down;
+
+    //Create variable for storing the data
+    let txt_file = "";
 
     //Is user input needed? come back to maybe can add it then
 
@@ -582,14 +614,16 @@ function experiment_set(){
     //Need to loop for about 100 for every ten first
     for(let i = 10; i <= 1000; i += 10){
         let ran_arr = [];
+        let j = 0;
         //run random for 100 times on every i, Need to append to an array
-        for(let j = 0; j < 100; j++){
+        while(j < 100){
             //call random and append onto ran_arr
             let steps = get_info(i);
             if(get_info(i) != 0){
                 ran_arr.push(steps);
+                txt_file += `${i} ${steps}\n`;
             }
-
+            j++;
             console.log(i , j);
         }
 
@@ -601,11 +635,22 @@ function experiment_set(){
                                         d3.quantile(ran_arr, 1),
                                         d3.quantile(ran_arr,0.5)
         ]})
-
         
 
     }
 
+    function ran_down(){
+        console.log("here");
+        let element = document.createElement('a');
+        element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(txt_file))
+        element.setAttribute('download', 'random-data.txt');
+
+        element.style.display = 'none';
+        document.body.appendChild(element);
+
+        element.click();
+        document.body.removeChild(element);
+    }
 
 
     //need to create a boxplot off the ran_arr
@@ -650,7 +695,7 @@ function experiment_set(){
         document.getElementById("random-tests").classList.remove("hidden");
 
         //remove button
-        document.getElementById("random-count").classList.add("hidden");
+        document.getElementById("random-experiment").classList.add("hidden");
 
         document.getElementById("graph").innerHTML = `
                                                         <table id = "experiment" class="hidden experimental ">

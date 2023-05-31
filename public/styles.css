@@ -227,6 +227,23 @@ body,html{
     text-align: center;
     grid-gap: 20px;
 }
+
+.random-experiment{
+    font-family: 'Roboto Mono', monospace;
+    
+    width: 100%;
+    display: grid;
+    grid-template-rows: 1fr 1fr ;
+    text-align: center;
+    grid-gap: 20px;
+    align-items: center;
+
+}
+
+#ran-download{
+    align-items: center;
+}
+
 .exp-label{
     font-size: 1.5em;
 }
